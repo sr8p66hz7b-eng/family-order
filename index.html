@@ -1,137 +1,49 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#FF6B35">
-  <title>家庭点餐</title>
-  <link rel="stylesheet" href="css/style.css">
-  <script src="https://cdn.bmob.net/2/bmob-min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#C45D3E">
+<title>家庭点餐</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.bmob.net/2/bmob-min.js"></script>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <!-- 顶部标题栏 -->
-  <header class="header">
-    <h1 id="page-title">菜单</h1>
-  </header>
+<header class="header"><h1 id="page-title">菜单</h1></header>
 
-  <!-- ===== 菜单页 ===== -->
-  <div id="page-menu" class="page active">
-    <div class="menu-layout">
-      <!-- 左侧分类 -->
-      <div class="category-sidebar" id="category-list"></div>
-      <!-- 右侧菜品列表 -->
-      <div class="dish-list" id="dish-list">
-        <div class="loading" id="menu-loading">
-          <div class="spinner"></div>
-          <p>加载中...</p>
-        </div>
-      </div>
-    </div>
-    <!-- 底部购物车 -->
-    <div class="cart-bar" id="cart-bar" style="display:none;">
-      <div class="cart-info">
-        <div class="cart-badge">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-          <span class="badge-num" id="cart-count">0</span>
-        </div>
-        <span class="cart-text">已选 <strong id="cart-count-text">0</strong> 道菜</span>
-      </div>
-      <button class="btn-order" onclick="submitOrder()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        下单
-      </button>
-    </div>
-  </div>
+<div id="page-menu" class="page active">
+<div class="menu-layout">
+<div class="category-sidebar" id="category-list"></div>
+<div class="dish-list" id="dish-list"><div class="loading" id="menu-loading"><div class="spinner"></div><p>加载中...</p></div></div>
+</div>
+<div class="cart-bar" id="cart-bar" style="display:none;">
+<div class="cart-info">
+<div class="cart-badge"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="badge-num" id="cart-count">0</span></div>
+<span class="cart-text">已选 <strong id="cart-count-text">0</strong> 道菜</span>
+</div>
+<button class="btn-order" onclick="submitOrder()"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>下单</button>
+</div></div>
 
-  <!-- ===== 订单页 ===== -->
-  <div id="page-orders" class="page">
-    <div class="order-list" id="order-list"></div>
-    <div class="empty-state" id="empty-orders">
-      <div class="empty-icon">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ddd" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-      </div>
-      <p class="empty-title">还没有订单</p>
-      <p class="empty-sub">去菜单页点菜吧~</p>
-    </div>
-  </div>
+<div id="page-orders" class="page">
+<div class="order-list" id="order-list"></div>
+<div class="empty-state" id="empty-orders"><div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><p class="empty-title">还没有订单</p><p class="empty-sub">去菜单页点菜吧~</p></div>
+</div>
 
-  <!-- ===== 我的页 ===== -->
-  <div id="page-my" class="page">
-    <!-- 添加菜品表单 -->
-    <div class="card">
-      <div class="card-header">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        <h3>添加菜品</h3>
-      </div>
-      <div class="form-group">
-        <label class="form-label">菜品名称</label>
-        <input type="text" id="dish-name" class="form-input" placeholder="例如：辣子鸡">
-      </div>
-      <div class="form-group">
-        <label class="form-label">选择分类</label>
-        <select id="dish-category" class="form-select">
-          <option value="鸡类">🐔 鸡类</option>
-          <option value="鸭类">🦆 鸭类</option>
-          <option value="鱼类">🐟 鱼类</option>
-          <option value="海鲜水产">🦐 海鲜水产</option>
-          <option value="猪肉">🥩 猪肉</option>
-          <option value="牛羊肉">🐂 牛羊肉</option>
-          <option value="蔬菜素菜">🥬 蔬菜素菜</option>
-          <option value="汤羹">🍲 汤羹</option>
-          <option value="凉菜">🥗 凉菜</option>
-          <option value="主食">🍜 主食</option>
-          <option value="小吃甜品">🍪 小吃甜品</option>
-          <option value="饮品">🥤 饮品</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">菜品图片</label>
-        <div class="upload-area" id="upload-area">
-          <input type="file" id="dish-image" accept="image/*" onchange="previewImage(event)">
-          <div class="upload-placeholder" id="upload-placeholder">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#bbb" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            <p>点击上传图片</p>
-          </div>
-          <img id="image-preview" class="image-preview" style="display:none;">
-        </div>
-      </div>
-      <button class="btn-primary" onclick="addDish()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        添加菜品
-      </button>
-    </div>
+<div id="page-my" class="page">
+<div class="card"><div class="card-header"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><h3>添加菜品</h3></div>
+<div class="form-group"><label class="form-label">菜品名称</label><input type="text" id="dish-name" class="form-input" placeholder="例如：辣子鸡"></div>
+<div class="form-group"><label class="form-label">选择分类</label><select id="dish-category" class="form-select"><option value="鸡类">🐔 鸡类</option><option value="鸭类">🦆 鸭类</option><option value="鱼类">🐟 鱼类</option><option value="海鲜水产">🦐 海鲜水产</option><option value="猪肉">🥩 猪肉</option><option value="牛羊肉">🐂 牛羊肉</option><option value="蔬菜素菜">🥬 蔬菜素菜</option><option value="汤羹">🍲 汤羹</option><option value="凉菜">🥗 凉菜</option><option value="主食">🍜 主食</option><option value="小吃甜品">🍪 小吃甜品</option><option value="饮品">🥤 饮品</option></select></div>
+<div class="form-group"><label class="form-label">菜品图片</label><div class="upload-area"><input type="file" id="dish-image" accept="image/*" onchange="previewImage(event)"><div class="upload-placeholder" id="upload-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>点击上传图片</p></div><img id="image-preview" class="image-preview" style="display:none;"></div></div>
+<button class="btn-primary" onclick="addDish()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>添加菜品</button></div>
+<div class="card"><div class="card-header"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><h3>已有菜品</h3></div><div id="my-dish-list"><div class="loading"><div class="spinner"></div><p>加载中...</p></div></div></div>
+</div>
 
-    <!-- 已有菜品列表 -->
-    <div class="card">
-      <div class="card-header">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        <h3>已有菜品</h3>
-      </div>
-      <div id="my-dish-list">
-        <div class="loading">
-          <div class="spinner"></div>
-          <p>加载中...</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== 底部导航 ===== -->
-  <nav class="bottom-nav">
-    <div class="nav-item active" data-page="menu" onclick="switchPage('menu')">
-      <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-      <span>菜单</span>
-    </div>
-    <div class="nav-item" data-page="orders" onclick="switchPage('orders')">
-      <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      <span>订单</span>
-    </div>
-    <div class="nav-item" data-page="my" onclick="switchPage('my')">
-      <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span>我的</span>
-    </div>
-  </nav>
-
-  <script src="js/app.js"></script>
-</body>
-</html>
+<nav class="bottom-nav">
+<div class="nav-item active" data-page="menu" onclick="switchPage('menu')"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg><span class="nav-label">菜单</span></div>
+<div class="nav-item" data-page="orders" onclick="switchPage('orders')"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span class="nav-label">订单</span></div>
+<div class="nav-item" data-page="my" onclick="switchPage('my')"><svg class="nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span class="nav-label">我的</span></div>
+</nav>
+<script src="js/app.js"></script>
+</body></html>
