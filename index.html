@@ -7,10 +7,19 @@
 <title>家庭点餐</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.bmob.net/2/bmob-min.js"></script>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+<!-- 身份选择栏 -->
+<div class="user-bar">
+  <span class="user-bar-label">点餐人：</span>
+  <div class="user-chips">
+    <div class="user-chip active" data-user="嘟嘟" onclick="selectUser('嘟嘟')">🐽 嘟嘟</div>
+    <div class="user-chip" data-user="薯薯" onclick="selectUser('薯薯')">🍠 薯薯</div>
+  </div>
+</div>
+
 <header class="header"><h1 id="page-title">菜单</h1></header>
 
 <!-- Menu -->
@@ -51,14 +60,7 @@
 <!-- My -->
 <div id="page-my" class="page">
   <div class="card">
-    <div class="card-header"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><h3>添加菜品</h3></div>
-    <div class="form-group"><label class="form-label">菜品名称</label><input type="text" id="dish-name" class="form-input" placeholder="例如：辣子鸡"></div>
-    <div class="form-group"><label class="form-label">选择分类</label><select id="dish-category" class="form-select"><option value="鸡类">🐔 鸡类</option><option value="鸭类">🦆 鸭类</option><option value="鱼类">🐟 鱼类</option><option value="海鲜水产">🦐 海鲜水产</option><option value="猪肉">🥩 猪肉</option><option value="牛羊肉">🐂 牛羊肉</option><option value="蔬菜素菜">🥬 蔬菜素菜</option><option value="汤羹">🍲 汤羹</option><option value="凉菜">🥗 凉菜</option><option value="主食">🍜 主食</option><option value="小吃甜品">🍪 小吃甜品</option><option value="饮品">🥤 饮品</option></select></div>
-    <div class="form-group"><label class="form-label">菜品图片</label><div class="upload-area"><input type="file" id="dish-image" accept="image/*" onchange="previewImage(event)"><div class="upload-placeholder" id="upload-placeholder"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>点击上传图片</p></div><img id="image-preview" class="image-preview" style="display:none;"></div></div>
-    <button class="btn-primary" onclick="addDish()"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>添加菜品</button>
-  </div>
-  <div class="card">
-    <div class="card-header"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><h3>已有菜品</h3></div>
+    <div class="card-header"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><h3>已有菜品</h3></div>
     <div id="my-dish-list"><div class="loading"><div class="spinner"></div><p>加载中...</p></div></div>
   </div>
 </div>
